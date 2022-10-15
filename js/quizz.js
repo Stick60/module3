@@ -3,15 +3,36 @@ const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id')
 console.log(id);
 
+let form = document.createElement('form');
+app.appendChild(form);
+
+
 fetch("https://qcm.alwayslearn.fr/api/examens/" + id)
 .then((res)=> {
     res.json().then(elements=>{
-        elements['question'].forEach(element => {
-        getElement(element);
-        let title = document.getElementById('titre')
+        elements['question'].forEach((element, index ) => {
+        let cardBody = getElement(element);
+        let title = document.getElementById('titre');
         title.innerHTML = elements.title;
-        console.log(element);
-        console.log(elements);
+
+        for (let option in element.options){
+            console.log(elements['question'][index].options[option].isCorrect);
+            let reponse = document.createElement('p');
+            let radio1 = document.createElement('input');
+            radio1.type= 'radio';
+            radio1.setAttribute('id','reponse'+index+option);
+            radio1.name= 'question'+ index;
+            radio1.value= option;
+            radio1.setAttribute('question',index);
+            let label1 = document.createElement('label');
+            label1.setAttribute('for','reponse'+index+option);
+            label1.innerText =element.options[option].option;
+            cardBody.appendChild(reponse);   
+            reponse.appendChild(radio1);   
+            reponse.appendChild(label1);
+
+            }
+
         });
     });
   
@@ -29,15 +50,13 @@ function getElement(element){
     let div3 = document.createElement('div');
     div3.classList.add('card-body');
     div1.appendChild(div3);
-  
-    let radio1 = document.createElement('input');
-    radio1.type= 'radio';
-    radio1.name= '1';
-    let label1 = document.createElement('label');
-    label1.for = '1';
-    label1.innerHTML =element.options.option;
 
-    div3.appendChild(radio1);   
-     div3.appendChild(label1);
-    app.appendChild(div1);
+   form.appendChild(div1);
+    return div3;
   }
+
+  let submit = document.createElement('input');
+  submit.type='submit';
+  let div4 = document.createElement('div');
+  form.appendChild(div4);
+  div4.appendChild(submit);
