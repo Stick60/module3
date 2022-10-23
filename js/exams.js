@@ -1,4 +1,4 @@
-let app = document.getElementById('app');
+let div = document.getElementById('app');
 fetch("https://qcm.alwayslearn.fr/api/examens")
 .then((res)=> {
     res.json().then(elements=>{
@@ -10,23 +10,23 @@ fetch("https://qcm.alwayslearn.fr/api/examens")
 });
 
 function getElement(element){
-  let div1 = document.createElement('div');
-  div1.classList.add('card', 'mb-2');
+  let carte = document.createElement('div');
+  carte.classList.add('card', 'mb-2');
 
-  let div2 = document.createElement('div');
-  div2.classList.add('card-header');
-  div1.appendChild(div2);
-  div2.innerHTML = element.title;
+  let headerCarte = document.createElement('div');
+  headerCarte.classList.add('card-header');
+  carte.appendChild(headerCarte);
+  headerCarte.innerHTML = element.title;
 
-  let div3 = document.createElement('div');
-  div3.classList.add('card-body');
-  div1.appendChild(div3);
+  let bodyCarte = document.createElement('div');
+  bodyCarte.classList.add('card-body');
+  carte.appendChild(bodyCarte);
 
-  let a = document.createElement('a');
-  a.href="quizz.html?id="+element.id;
-  a.classList.add('btn', 'btn-primary');
+  let lien = document.createElement('a');
+  lien.href="quizz.html?id="+element.id;
+  lien.classList.add('btn', 'btn-primary');
   
-  a.innerHTML ="Démarrer l'examen";
-  div3.appendChild(a);
-  app.appendChild(div1);
+  lien.innerHTML ="Démarrer l'examen";
+  bodyCarte.appendChild(lien);
+  div.appendChild(carte);
 }
